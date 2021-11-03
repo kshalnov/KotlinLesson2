@@ -12,7 +12,7 @@ import ru.gb.course1.kotlinlesson2.databinding.ActivityMainBinding
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel: LoginContract.ViewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

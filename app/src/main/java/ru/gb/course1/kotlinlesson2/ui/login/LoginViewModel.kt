@@ -6,23 +6,16 @@ import androidx.lifecycle.ViewModel
 
 
 class LoginViewModel : ViewModel(), LoginContract.ViewModel {
-    private val _emailValidationErrorLiveData = MutableLiveData<Boolean>()
-    override val emailValidationErrorLiveData: LiveData<Boolean> = _emailValidationErrorLiveData
-
-    private val _loginEnabledLiveData = MutableLiveData<Boolean>()
-    override val loginEnabledLiveData: LiveData<Boolean> = _loginEnabledLiveData
-
-    private val _emailLiveData = MutableLiveData<String>()
-    override val emailLiveData: LiveData<String> = _emailLiveData
-
-    private val _screenStateLiveData = MutableLiveData<LoginContract.LoginState>()
-    override val screenStateLiveData: LiveData<LoginContract.LoginState> = _screenStateLiveData
+    override val emailValidationErrorLiveData = MutableLiveData<Boolean>()
+    override val loginEnabledLiveData = MutableLiveData<Boolean>()
+    override val emailLiveData = MutableLiveData<String>()
+    override val screenStateLiveData = MutableLiveData<LoginContract.LoginState>()
 
     override fun onEmailChanged(email: String) {
-        _emailLiveData.postValue(email)
+        emailLiveData.postValue(email)
         val isValid = isEmailValid(email)
-        _loginEnabledLiveData.postValue(isValid)
-        _emailValidationErrorLiveData.postValue(!isValid)
+        loginEnabledLiveData.postValue(isValid)
+        emailValidationErrorLiveData.postValue(!isValid)
     }
 
     override fun onLogin(email: String, password: String) {
@@ -31,7 +24,7 @@ class LoginViewModel : ViewModel(), LoginContract.ViewModel {
         } else {
             LoginContract.LoginState.WRONG_PASSWORD
         }
-        _screenStateLiveData.postValue(state)
+        screenStateLiveData.postValue(state)
     }
 
     private fun isEmailValid(email: String): Boolean {
@@ -41,4 +34,13 @@ class LoginViewModel : ViewModel(), LoginContract.ViewModel {
     private fun checkCredentials(email: String, password: String): Boolean {
         return email == password
     }
+
+//    private fun <T> LiveData<T>.post(value: T) {
+//        if (this is MutableLiveData<T>) {
+//            this.postValue(value)
+//        } else {
+//            throw IllegalStateException("It is note Mutable!")
+//        }
+//    }
+
 }
