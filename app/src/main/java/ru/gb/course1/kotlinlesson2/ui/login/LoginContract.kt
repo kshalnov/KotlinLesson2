@@ -1,21 +1,17 @@
 package ru.gb.course1.kotlinlesson2.ui.login
 
+import androidx.lifecycle.LiveData
+
 class LoginContract {
-    enum class ErrorCode {
-        NO_INTERNET, WRONG_PASSWORD
+    enum class LoginState {
+        IDLE, SUCCESS, NO_INTERNET, WRONG_PASSWORD
     }
 
-    interface View {
-        fun showError(errorCode: ErrorCode)
-        fun showEmailValidationError()
-        fun enableLogin(enable: Boolean)
-        fun showLoginSuccess()
-        fun setEmail(email: String)
-    }
-
-    interface Presenter {
-        fun attach(view: View)
-        fun detach()
+    interface ViewModel {
+        val emailLiveData: LiveData<String>
+        val emailValidationErrorLiveData: LiveData<Boolean>
+        val loginEnabledLiveData: LiveData<Boolean>
+        val screenStateLiveData: LiveData<LoginState>
 
         fun onEmailChanged(email: String)
         fun onLogin(email: String, password: String)
